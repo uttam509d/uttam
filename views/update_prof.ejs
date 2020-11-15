@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Professor</title>
+    <script src="https://kit.fontawesome.com/63e2b2b603.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/update_student.css">
+    <script>
+        function add() {
+            console.log('here');
+            var x = document.getElementById('container');
+            var p = document.getElementById('save');
+            var i = x.childElementCount;
+            // x.innerHTML += `<input type='text' required='true' placeholder='course${i}' name='course${i}'>`;
+            x.innerHTML += `<div class="box">
+            <i class="fa fa-vcard-o"></i>
+            <label for="course[]">Course:</label>
+            <input name='course[]' type="text">
+        </div>`;
+            // p.innerHTML +=1;
+            console.log(i + 1);
+        }
+        function get_value() {
+            return document.getElementById('container').childElementCount + 1;
+        }
+        function check_gender(){
+            // document.getElementById('dob').defaultValue="2020-22-1";
+            let old_gender = document.getElementById('old_gender').innerHTML;
+            if(old_gender == 'M'){
+                document.getElementById('old_gender').innerHTML="Male";
+                document.getElementById('male').checked="true";
+            }else if(old_gender == 'F'){
+                document.getElementById('old_gender').innerHTML="Female";
+                document.getElementById('female').checked="true";
+            }else{
+                document.getElementById('old_gender').innerHTML="Others";
+                document.getElementById('others').checked="true";
+            }
+        }
+    </script>
+</head>
+
+<body onload="check_gender()">
+
+    <nav class="navbar">
+        <img class="logo" src="./css/images/logo.png" alt="...">
+        <h3>भारतीय प्रौद्योगिकी संस्थान इंदौर <br> Indian Institute of Technology Indore</h3>
+    </nav>
+
+    <div class="bar">
+        <ul>
+            <li><a href="/Admin_home">Admin Home</a></li>
+            <li><a href="/admin_change_password">Change Password</a></li>
+            <li><a href="/logout">Log Out</a></li>
+        </ul>
+    </div>
+
+    <h1>Update Professor Data</h1>
+
+    <table class="table">
+        <tr style="color: rgb(151, 4, 156); background-color: chartreuse;">
+            <th>Field</th>
+            <th>Old Value</th>
+        </tr>
+        <tr>
+            <td style="background-color: rgb(161, 228, 255);">Name</td>
+            <td><%= data1.P_Name%></td>
+        </tr>
+        <tr>
+            <td style="background-color: rgb(161, 228, 255);">Program</td>
+            <td><%= data1.Post%></td>
+        </tr>
+        <tr>
+            <td style="background-color: rgb(161, 228, 255);">Department ID</td>
+            <td><%= data1.Department_ID%></td>
+        </tr>
+        <tr>
+        <tr>
+            <td style="background-color: rgb(161, 228, 255);">Gender</td>
+            <td id="old_gender"><%= data1.Gender%></td>
+        </tr>
+        <tr>
+            <td style="background-color: rgb(161, 228, 255);">Date of Birth</td>
+            <td id="old_dob"><%= fdate%></td>
+        </tr>
+        <td style="background-color: rgb(161, 228, 255);">Courses</td>
+        <td>
+            <% data2.forEach((item)=>{%>
+            <span style="display: inline-block;"><%=item.Course_Code%></span>
+            <%})%>
+        </td>
+        </tr>
+    </table>
+
+    <div class="container">
+
+        <h1>New Data</h1>
+        <form action="" method="POST">
+            <div class="box">
+                <i class="fa fa-user"></i>
+                <label for="username">Name:</label>
+                <input type="text" name="username" required="true" id="name" value='<%= data1.P_Name%>'
+                    placeholder="Enter Name">
+            </div>
+            <div class="box">
+                <i class="fa fa-address-card"></i>
+                <label for="post">Post:</label>
+                <input type="text" name="post" required="true" value='<%= data1.Post%>' placeholder="Enter Post">
+            </div>
+            <div class="box">
+                <i class="fa fa-key"></i>
+                <label for="depid">Department ID:</label>
+                <input type="number" name="depid" required="true" id="depid" value='<%= data1.Department_ID%>'
+                    placeholder="Enter Department ID">
+            </div>
+            <div class="box">
+                <i class="fa fa-key"></i>
+                <label for="depid">Email:</label>
+                <input type="email" name="email" required="true" id="email" value='<%= data1.Email%>'>
+            </div>
+            <div class="box">
+                <i class="fa fa-key"></i>
+                <label for="dob">Date of Birth:</label>
+                <input type="date" name="dob" required="true" id="dob" value=<%=rdate%>>
+            </div>
+            <div class="box">
+                <i class="fa fa-key"></i>
+                <input type="radio" name="gender" id="male" value="M">
+                <label for="male">Male</label>
+                <input type="radio" name="gender" id="femmale" value="F">
+                <label for="female">Female</label>
+                <input type="radio" name="gender" id="others" value=null>
+                <label for="others">Others</label>
+            </div>
+        
+            <%var c=0;
+            for(c=0;c<clen;c++){%>
+            <div class="box">
+                <i class="fa fa-vcard-o"></i>
+                <label for="course[]">Course:</label>
+                <input name='course[]' value='<%=data2[c].Course_Code%>' type="text">
+            </div>
+
+            <% }var emp = empid%>
+            <div id="container">
+
+                <p id="save" style="visibility: hidden;"></p>
+
+            </div>
+            <input type="text" name="empid" style="display: none;" value=<%=emp%>>
+            <button type="button" class="btn" id="btn1" onclick="add()">Add Course</button></br>
+            <a href="/admin_home" type="submit"><button class="btn" id="btn2">Update</button></a>
+
+            <p style="color: rgb(168, 160, 160);" id="p1">
+                *Courses will get overwritten<br>
+                *Leave the course field empty to unassign
+            </p>
+        </form>
+
+    </div>
+
+</body>
+
+</html>

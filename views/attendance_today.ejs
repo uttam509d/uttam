@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Attendance</title>
+    <script src="https://kit.fontawesome.com/63e2b2b603.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/add_course.css">
+    <link rel="stylesheet" href="./css/Attendance.css">
+    <style>
+        .bar {
+            margin: 20px 0px 10px 0px;
+            position: sticky;
+            display: flex;
+            background-color: rgb(87, 212, 225);
+            border-radius: 15px;
+            z-index: 10;
+        }
+
+        ul {
+            display: flex;
+        }
+
+        li {
+            list-style: none;
+            margin: 0px 10px;
+            font-size: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 7px;
+            color: #072ff2;
+        }
+
+        li a:hover {
+            border: 1px solid black;
+            border-radius: 15px;
+            color: black;
+            text-decoration: none;
+            background-color: #dbefea;
+        }
+
+        @media (min-width: 385px) and (max-width: 510px) {
+            ul {
+                padding-inline-start: 10px;
+            }
+
+            li {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 385px) {
+            ul {
+                padding-inline-start: 5px;
+            }
+
+            li {
+                font-size: 11px;
+                margin: 0px 2px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <img class="logo" src="./css/images/logo.png" alt="...">
+        <h3>भारतीय प्रौद्योगिकी संस्थान इंदौर <br> Indian Institute of Technology Indore</h3>
+    </nav>
+
+    <div class="bar">
+        <ul>
+            <li class="item"><a href="/teacher_home">Home</a></li>
+            <li class="item"><a href="/check_attendance">Check Attendance</a></li>
+            <li class="item"><a href="/today_attendance">Today's attendance</a></li>
+            <li class="item"><a href="/prof_timetable">Time Table</a></li>
+            <li class="item"><a href="/prof_courses">Courses</a></li>
+            <li class="item"><a href="/prof_study_material">Study Material</a></li>
+            <li class="item"><a href="/prof_change_password">Change Password</a></li>
+
+            <li class="item"><a href="/logout">LogOut</a></li>
+        </ul>
+    </div>
+    
+    <h1>Check Today's Attendance</h1>
+
+    <div class="container">
+
+        <form id="form" action="" method="post">
+            <div class="box">
+                <i class="fa fa-vcard-o"></i>
+                <input placeholder="Course Code" name="course_code" type="text" required=true>
+            </div>
+
+            <button class="btn" type="submit">Today's Attendance</button>
+    </div>
+
+    <%if( typeof error != 'undefined'){%>
+    <p><%=error%></p>
+    <%}%>
+    </form>
+   
+    <%if(typeof data != 'undefined'){
+      if(data.length > 0){%>
+    <table class="table">
+
+        <tr>
+            <th>Sr. No.</th>
+            <th>Roll No.</th>
+            <th>Name</th>
+            <th>Time</th>
+        </tr>
+
+        <% var i =1%>
+        <% data.forEach((item)=>{ %>
+        <tr>
+            <td><%=i%></td>
+            <td><%= item.Roll_No %></td>
+            <td><%= item.S_Name %></td>
+            <td><%= item.Time %></td>
+        </tr>
+        <% i++}) %>
+
+    </table>
+    <%}else{%>
+    <h3>No attendance registered today</h3>
+    <%}%>
+      <%}%>
+</body>
+
+</html>
